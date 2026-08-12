@@ -1,58 +1,212 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Lentera App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> **Status:** Concept / Architecture Planning  
+> **Purpose:** Modular business operating system foundation for Indonesian UMKM  
+> **Philosophy:** One foundation. Many possibilities. Grow according to business needs.
 
-## About Laravel
+## About Lentera
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Lentera App is a **modular business operating system** designed for Indonesian SMEs (UMKM). Unlike traditional one-size-fits-all business software, Lentera provides a unified foundation that can be configured and extended based on the specific needs and workflows of different business types.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Core Principles
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Satu fondasi. Banyak kemungkinan. Tumbuh sesuai kebutuhan bisnis.**
 
-## Learning Laravel
+- **One Foundation**: A unified backend with shared business logic (Core)
+- **Many Possibilities**: Extensible through Horizontal Modules and Vertical Extensions
+- **Scalable Growth**: Start with essential features, add capabilities as business grows
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Example Configurations
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```
+Lentera Resto     = Core + POS + Inventory + Reports + Restaurant
+Lentera Printing  = Core + CRM + Inventory + Reports + Printing
+Lentera Laundry   = Core + Customer + Reports + Laundry
+Lentera Retail    = Core + POS + Inventory + Supplier + Reports + Retail
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Architecture
 
-## Contributing
+Lentera follows a **Modular Monolith** approach with clear domain boundaries:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### High-Level Structure
 
-## Code of Conduct
+```
+LENTERA APP
+    ↓
+BUSINESS CORE (Auth, User, Business, Permission, Settings, Audit)
+    ↓
+HORIZONTAL MODULES (POS, Inventory, CRM, Reports, Notifications)
+    ↓
+VERTICAL EXTENSIONS (Restaurant, Printing, Laundry, Retail, etc.)
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Three Layers
 
-## Security Vulnerabilities
+1. **Core** - Universal capabilities for all businesses
+2. **Modules** (Horizontal) - Cross-industry features (POS, Inventory, CRM)
+3. **Verticals** (Specialized) - Business-specific workflows and features
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Project Structure
+
+```
+lentera/
+├── app/
+│   ├── Console/
+│   ├── Exceptions/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Core/
+│   │   │   ├── Modules/
+│   │   │   └── Verticals/
+│   │   ├── Middleware/
+│   │   └── Requests/
+│   ├── Models/
+│   │   ├── Core/
+│   │   ├── Modules/
+│   │   └── Verticals/
+│   ├── Services/
+│   │   ├── Core/
+│   │   ├── Modules/
+│   │   └── Verticals/
+│   ├── Policies/
+│   ├── Providers/
+│   └── Support/
+│       ├── Contracts/
+│       ├── DTOs/
+│       ├── Enums/
+│       └── Helpers/
+│
+├── config/
+│   ├── lentera.php
+│   ├── modules.php
+│   └── permissions.php
+│
+├── database/
+│   ├── migrations/
+│   │   ├── core/
+│   │   ├── modules/
+│   │   │   ├── pos/
+│   │   │   ├── inventory/
+│   │   │   ├── crm/
+│   │   │   └── reports/
+│   │   └── verticals/
+│   │       ├── restaurant/
+│   │       ├── printing/
+│   │       ├── laundry/
+│   │       └── retail/
+│   ├── factories/
+│   └── seeders/
+│
+├── resources/
+│   ├── js/
+│   │   ├── core/
+│   │   ├── modules/
+│   │   ├── verticals/
+│   │   └── shared/
+│   ├── css/
+│   └── views/
+│
+├── routes/
+│   ├── web.php
+│   ├── api.php
+│   ├── core.php
+│   ├── modules.php
+│   └── verticals.php
+│
+└── tests/
+    ├── Feature/
+    │   ├── Core/
+    │   ├── Modules/
+    │   └── Verticals/
+    └── Unit/
+        ├── Core/
+        ├── Modules/
+        └── Verticals/
+```
+
+## Technology Stack
+
+### Backend
+- **Framework**: Laravel 11+
+- **Language**: PHP 8.3+
+- **Database**: Supports MySQL, PostgreSQL
+- **Authentication**: Laravel Sanctum/Passport
+- **Job Queue**: Laravel Queues
+
+### Frontend
+- **Framework**: Vue 3
+- **Language**: TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **State Management**: Pinia
+
+## Key Architecture Concepts
+
+### Core
+Universal capabilities for all businesses:
+- Authentication & Authorization
+- User Management
+- Business/Organization Setup
+- Permission System
+- Settings & Configuration
+- Audit Logging
+
+### Horizontal Modules
+Cross-industry business features:
+
+**POS** - Point of Sale  
+- Sale transactions
+- Items and SKUs
+- Payment processing
+- Receipt generation
+
+**Inventory** - Stock Management
+- Product catalog
+- Stock tracking
+- Stock movements
+- Warehouse management
+
+**CRM** - Customer Relationship
+- Customer profiles
+- Purchase history
+- Notes and interaction tracking
+- Customer segmentation
+
+**Reports** - Business Analytics
+- Sales reports
+- Inventory insights
+- Financial summaries
+
+### Vertical Extensions
+Business-specific features:
+
+**Restaurant** - Menu, Orders, Kitchen workflow  
+**Printing** - Quotations, Print jobs, Production, Finishing  
+**Laundry** - Service types, Orders, Washing workflow  
+**Retail** - Products, SKU, Barcode, Suppliers  
+
+## Workflow as First-Class Concept
+
+Each vertical implements business-specific workflows:
+
+| Restaurant | Laundry | Printing | Retail |
+|-----------|---------|----------|--------|
+| DRAFT | RECEIVED | QUOTATION | CART |
+| CONFIRMED | WASHING | CONFIRMED | PAID |
+| PREPARING | DRYING | DESIGN | COMPLETED |
+| READY | IRONING | PRODUCTION | |
+| COMPLETED | READY | FINISHING | |
+| | PICKED_UP | READY | |
+| | | DELIVERED | |
+
+## Development
+
+For detailed architecture and development guidelines, see:
+- [learn-module/](learn-module/) - Learning resources and exercises
+- [handoff.md](handoff.md) - Project handoff and architecture decisions
+- [learn.md](learn.md) - Project learning notes
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License.
