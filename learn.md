@@ -1,62 +1,46 @@
-# Struktur Folder Laravel
+## Ringkasan Struktur Project (Lentera)
 
-Struktur folder Laravel dirancang untuk memisahkan logika, konfigurasi, aset, dan data runtime.
+Dokumen ini menyelaraskan struktur folder proyek dengan spesifikasi arsitektur di `handoff.md`. Tujuannya: memberi panduan cepat untuk kontributor baru dan pengembang.
 
-## Root
-- `artisan` - CLI Laravel.
-- `composer.json` - deklarasi dependensi PHP.
-- `package.json` - dependensi JavaScript/Vite.
-- `phpunit.xml` - konfigurasi pengujian.
-- `README.md` - dokumentasi proyek.
+### Inti (root)
+- `artisan`, `composer.json`, `package.json`, `README.md`, `vite.config.js`
 
-## app/
-- `Models/` - model Eloquent dan representasi data.
-- `Http/Controllers/` - controller yang menangani permintaan HTTP.
-- `Providers/` - service provider aplikasi.
-- `User.php` - contoh model pengguna.
+### `app/`
+Struktur domain-aware yang mengikuti pembagian Core, Modules, dan Verticals. Contoh subfolder penting:
+- `Console/`, `Exceptions/`
+- `Http/Controllers/{Core,Modules,Verticals}`, `Http/Middleware`, `Http/Requests`
+- `Models/{Core,Modules,Verticals}`
+- `Services/{Core,Modules,Verticals}`
+- `Policies/`, `Providers/`, `Support/{Enums,DTOs,Contracts,Helpers}`
 
-## bootstrap/
-- `app.php` - bootstrap framework aplikasi.
-- `cache/` - cache bootstrap dan konfigurasi paket.
+Catatan: `app/Providers/LenteraServiceProvider.php` direkomendasikan untuk provider proyek (bila belum ada).
 
-## config/
-- Konfigurasi aplikasi seperti `app.php`, `auth.php`, `database.php`, `mail.php`, `queue.php`, `services.php`, dan `session.php`.
+### `bootstrap/`
+- berisi `app.php` dan cache bootstrap di `bootstrap/cache`.
 
-## database/
-- `migrations/` - file migrasi database.
-- `seeders/` - data seed awal.
-- `factories/` - factory model untuk pengujian.
+### `config/`
+- konfigurasi aplikasi. Disarankan menambah `lentera.php`, `modules.php`, `permissions.php` untuk konfigurasi modular.
 
-## public/
-- `index.php` - titik masuk aplikasi web.
-- `robots.txt` - aturan perayap.
-- `build/` - aset frontend terkompilasi (diabaikan oleh git).
+### `database/`
+- `migrations/`, `factories/`, `seeders/`.
+- Untuk modularitas, pertimbangkan subfolder migrasi: `migrations/core`, `migrations/modules`, `migrations/verticals`.
 
-## resources/
-- `views/` - template Blade.
-- `js/` dan `css/` - sumber asset frontend.
+### `resources/`
+- `views/` (Blade templates)
+- `js/{core,modules,verticals,shared}` dan `css/` untuk sumber frontend.
 
-## routes/
-- `web.php` - rute web.
-- `console.php` - rute konsol/artisan.
+### `routes/`
+- `web.php`, `api.php`, dan file rute khusus domain seperti `core.php`, `modules.php`, `verticals.php` direkomendasikan.
 
-## storage/
-- Menyimpan data runtime seperti log, cache, sesi, dan file yang diunggah.
-- `app/`, `framework/`, `logs/`, dan `testing/` biasanya diabaikan oleh git.
+### `storage/`
+- runtime files: `app/`, `framework/`, `logs/`, `testing/` (umumnya diabaikan oleh Git).
 
-## tests/
-- `Feature/` - pengujian fungsional.
-- `Unit/` - pengujian unit.
-- `TestCase.php` - dasar pengujian.
+### `tests/`
+- `Feature/{Core,Modules,Verticals}`, `Unit/{Core,Modules,Verticals}`
 
-## vendor/
-- Dependensi PHP pihak ketiga yang diinstal oleh Composer.
+### `vendor/`
+- dependensi Composer (di-ignore oleh Git).
 
-## framework/
-- Kode inti Laravel yang disalin ke dalam proyek.
+---
 
-## storage/logs dan storage/framework
-- `storage/logs` - log aplikasi.
-- `storage/framework` - cache view, session, dan file runtime lain.
-
-> Catatan: Folder `app/` adalah inti aplikasi. Jangan memasukkannya ke `.gitignore` jika Anda ingin menyimpan kode aplikasi.
+Lihat juga modul belajar: [learn-module](learn-module/README.md) untuk panduan pengembangan, setup, dan checklist tugas awal proyek.
