@@ -430,8 +430,8 @@ PUT    /restaurant/orders/{id}/items/{itemId}/status - Update item status
 ### Phase 1: Foundation (Weeks 1-2)
 **Goal**: Setup base infrastructure and Core module
 
-- [ ] Project setup with Laravel + Vue 3 + Tailwind
-- [ ] Database migrations scaffold
+- [x] Project setup with Laravel + Vue 3 + Tailwind
+- [x] Database migrations scaffold
 - [ ] User authentication (registration, login, logout)
 - [ ] Business profile setup
 - [ ] Role-based authorization

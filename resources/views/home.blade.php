@@ -10,7 +10,7 @@
 
     <p>Ini contoh tampilan MVC sederhana di Laravel.</p>
 
-    @if ($posts->isEmpty())
+    @if (empty($posts))
         <p>Tidak ada post tersedia.</p>
     @else
         <ul>
