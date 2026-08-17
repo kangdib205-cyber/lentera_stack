@@ -31,6 +31,28 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'user_roles');
     }
 
+    public function hasPermission(string $permission): bool
+    {
+        foreach ($this->roles as $role) {
+            if ($role->permissions()->where('name', $permission)->exists()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasAnyPermission(array $permissions): bool
+    {
+        foreach ($permissions as $p) {
+            if ($this->hasPermission($p)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Get the attributes that should be cast.
      *

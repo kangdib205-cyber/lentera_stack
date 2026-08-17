@@ -83,3 +83,15 @@ Jangan langsung mengubah code sebelum memahami struktur dan dependency domain ya
 - Dokumentasi di `plan.md` dan `learn-module/` sebagian bersifat aspirational; implementasi aktual di codebase lebih relevan sebagai referensi.
 - Route root masih menggunakan pendekatan fallback sederhana, bukan data domain yang kompleks.
 - Belum ada feature vertical/module lanjutan yang dibangun; fokus saat ini masih pada fondasi Core dan setup awal aplikasi.
+
+### 2026-08-16 — Penutupan sesi: Implementasi autentikasi dan UI
+- Menyelesaikan implementasi otentikasi pengguna (register/login/logout): backend controller, request validation, routes API, migrations/seed untuk roles, dan feature tests.
+- Menambahkan frontend minimal untuk auth: `resources/js/core/useAuth.js`, `resources/js/pages/auth/Login.vue`, `resources/js/pages/auth/Register.vue`, dan integrasi di `resources/js/App.vue`.
+- Menjalankan `php artisan migrate` dan `php artisan db:seed --class=AuthSeeder` untuk memastikan roles dan owner seeded.
+- Menjalankan test fitur untuk auth: `php artisan test --filter AuthTest` — semua test lulus.
+- Menjalankan Vite dev server (http://localhost:5173) berhasil; backend `php artisan serve` belum dijalankan (port 8000 kosong saat diminta).
+
+Known issues / notes:
+- `php artisan serve` belum dijalankan oleh agen karena eksekusi dibatalkan oleh pengguna; jika Anda ingin saya jalankan server backend, saya dapat mengeksekusinya sekarang.
+
+Session end: semua tugas otentikasi ditandai selesai dalam todo list; siap melanjutkan fase berikutnya.

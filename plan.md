@@ -432,7 +432,7 @@ PUT    /restaurant/orders/{id}/items/{itemId}/status - Update item status
 
 - [x] Project setup with Laravel + Vue 3 + Tailwind
 - [x] Database migrations scaffold
-- [ ] User authentication (registration, login, logout)
+- [x] User authentication (registration, login, logout)
 - [ ] Business profile setup
 - [ ] Role-based authorization
 - [ ] User management UI

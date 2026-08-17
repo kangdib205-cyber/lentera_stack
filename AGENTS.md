@@ -63,7 +63,7 @@ Sebagian besar domain directory saat ini masih hanya berisi `.gitkeep`. Implemen
 ### Fase MVP Saat Ini
 
 ```text
-Phase 2 — POS Module, minggu 3–4
+Phase 1 Foundation
 ```
 
 > Update bagian ini secara manual saat fase MVP berubah.
@@ -169,6 +169,36 @@ console.php
 Karena itu, route baru pada file domain harus terlebih dahulu didaftarkan melalui `withRouting()` atau menggunakan `loadRoutesFrom()` pada provider yang sesuai.
 
 ## Perintah Utama
+
+### Scope & YAGNI Check
+
+- [ ] Jangan menambahkan feature hanya karena dianggap best practice.
+- [ ] Setiap feature baru harus memiliki alasan bisnis atau kebutuhan teknis yang jelas.
+- [ ] Jangan mengimplementasikan infrastructure sebelum ada consumer yang membutuhkannya.
+- [ ] Jangan membuat abstraction/generic system untuk kebutuhan yang belum muncul.
+- [ ] Prioritaskan penyelesaian flow MVP yang sedang aktif dibanding hardening fitur yang belum digunakan.
+- [ ] Jika menemukan improvement di luar scope, catat sebagai recommendation/backlog, jangan langsung implementasikan.
+- [ ] Sebelum mengerjakan recommendation, jelaskan dependency dan alasan kenapa feature tersebut dibutuhkan sekarang.
+- [ ] Hindari speculative implementation, terutama untuk authentication, permissions, multi-tenancy, plugin system, workflow engine, dan infrastructure.
+
+
+### Recommendation vs Implementation
+
+Agent harus membedakan:
+
+1. **Required now**
+   - Dibutuhkan agar feature yang sedang dikerjakan berfungsi atau aman digunakan.
+
+2. **Recommended next**
+   - Masuk akal untuk pekerjaan berikutnya, tetapi tidak menghalangi pekerjaan saat ini.
+
+3. **Future / Backlog**
+   - Valid secara teknis tetapi belum dibutuhkan oleh MVP.
+
+Jangan mengubah item kategori 2 atau 3 menjadi implementation tanpa instruksi eksplisit.
+
+Jika pekerjaan saat ini sudah selesai dan test lulus, jangan otomatis memperluas scope.
+Laporkan recommendation sebagai backlog dan tunggu instruksi.
 
 ### Setup Baru
 
